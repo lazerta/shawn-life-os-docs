@@ -78,3 +78,19 @@ No release, migration, validation gate, or architecture claim is PASS without re
 
 ## 13. Governance
 Long-lived rules belong in durable governance documents. Versioned specs and ADRs describe how a specific release implements them. The Google Drive live handoff tracks current operational state and must not silently override these principles.
+
+## 14. Pluggable + Configurable DataSources
+DataSource support is a first-class plugin boundary. New sources are added through discoverable/configurable plugins and adapters rather than hard-coded source-specific branches in the canonical core.
+
+A DataSource plugin declares its stable identity, version, acquisition channels, configuration schema, output semantic schemas, capabilities, health/readiness behavior, and provenance contract. Individual `SourceInstance` configurations enable/disable and bind plugins to processing pipelines declaratively.
+
+One logical DataSource may expose multiple acquisition adapters. For example, WeChat may support screenshot, backup-database, export-file, and future API adapters without changing the canonical domain model.
+
+Installing, removing, enabling, disabling, or reconfiguring a plugin must not require changing canonical domain logic.
+
+## 15. Versioned Semantic Contracts + Diagram-as-Code
+Every durable or pipeline-visible output declares a versioned semantic schema. A schema defines field meaning as well as shape; untyped/unversioned JSON is not a durable pipeline contract.
+
+Architecture relationships, lifecycle, data flow, and state transitions should be documented with maintainable UML-style diagram-as-code when a diagram materially improves precision. Mermaid is the preferred Markdown format because it is diffable, reviewable, version-controlled, and rendered directly by GitHub.
+
+Diagrams do not replace normative prose, schemas, acceptance criteria, or tests. When architecture relationships change, affected diagrams are updated before implementation under the Document First rule.

@@ -4,13 +4,14 @@ This repository stores versioned, relatively stable Shawn Life OS documentation:
 
 ## Start here
 
-- `ENGINEERING_PRINCIPLES.md` — long-term project constitution: Document First, Open Source First, Adapter/Port First, Code First / Model Last, Spec/Test/Real-Data Driven, Evidence Before PASS.
-- `ARCHITECTURE_INVARIANTS.md` — durable architecture invariants, including deterministic facts, immutable + append-only history, provenance, rebuildable projections, and code pre-commit regression rules.
+- `ENGINEERING_PRINCIPLES.md` — long-term project constitution: Document First, Open Source First, Adapter/Port First, Code First / Model Last, Spec/Test/Real-Data Driven, Pluggable DataSources, Evidence Before PASS.
+- `ARCHITECTURE_INVARIANTS.md` — durable architecture invariants, including deterministic facts, immutable + append-only history, provenance, rebuildable projections, versioned semantic schemas, plugin lifecycle, and code pre-commit regression rules.
+- `DATASOURCE_PLUGIN_ARCHITECTURE.md` — normative DataSource/plugin/pipeline architecture with Mermaid UML diagrams for domain relationships, dependency flow, ingestion sequence, plugin lifecycle, data lineage, and pipeline fan-out.
 
 ## Repository split
 
 - `lazerta/shawn-life-os` — canonical application source code, tests, migrations, build/CI, and release tags.
-- `lazerta/shawn-life-os-docs` — stable/versioned specs, architecture decisions, validation reports, research, documentation snapshots, and durable governance.
+- `lazerta/shawn-life-os-docs` — stable/versioned specs, architecture decisions, validation reports, research, documentation snapshots, durable governance, and architecture diagrams-as-code.
 - Google Drive `Shawn Life OS - Agent Workspace/lib/AGENT_HANDOFF_PROGRESS_AND_WORKAROUNDS` — canonical live handoff / progress / workaround process document.
 - Google Drive workspace — large binary artifacts, dependency bundles, ZIPs/JARs, and operational working files that do not belong in Git.
 
@@ -18,7 +19,7 @@ This repository stores versioned, relatively stable Shawn Life OS documentation:
 
 1. **Code state:** `lazerta/shawn-life-os`.
 2. **Live agent handoff / progress / current workaround state:** Google Drive handoff document.
-3. **Stable documentation, durable engineering principles, architecture invariants, and validation snapshots:** this repository.
+3. **Stable documentation, durable engineering principles, architecture invariants, UML/diagram-as-code, and validation snapshots:** this repository.
 4. **Large release/validation binaries:** Google Drive.
 
 The frequently changing handoff is intentionally not mirrored on every small update into Git. When a milestone stabilizes, a report/spec snapshot may be committed here for durable version history.

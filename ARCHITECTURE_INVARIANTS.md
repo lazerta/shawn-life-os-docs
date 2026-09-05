@@ -85,3 +85,48 @@ No release, migration, validation gate, or consequential architecture claim is P
 Public internet data may be used for testing when legally accessible and privacy-safe. Record the original source/repository, retrieval date, version/tag/commit when available, license/terms, attribution obligations, and every transformation/mutation applied.
 
 Publicly accessible leaks, credentials, private dumps, or unlawfully exposed personal data are not acceptable test sources.
+
+## INV-PLUGIN-001 — DataSources are pluggable and configurable
+A DataSource is a first-class plugin boundary, not a hard-coded source-specific branch in canonical core logic.
+
+Each DataSource plugin must declare a stable plugin ID/version, supported source-system type(s), acquisition channels, configuration schema, output semantic schema(s), capabilities, health/readiness behavior, secret references, and provenance contract.
+
+A configured `SourceInstance` selects and configures a plugin/adapter declaratively. Installing, removing, enabling, disabling, or reconfiguring a plugin must not require changing canonical domain logic.
+
+A single logical DataSource may expose multiple acquisition adapters. Distinct acquisition methods must preserve their own provenance while mapping into the same source-system/canonical semantics where appropriate.
+
+Plugin failures must be isolated at the adapter/pipeline boundary and must not corrupt immutable history. Missing, disabled, unhealthy, or incompatible plugins fail explicitly and must not silently substitute another source or fabricate data.
+
+## INV-SCHEMA-001 — Every pipeline-visible output has a versioned semantic schema
+Every durable or pipeline-visible payload must declare a versioned semantic schema. Untyped or unversioned JSON is not a durable contract.
+
+Schemas define semantic meaning as well as field shape, including units, timestamp semantics/precision/timezone interpretation, identity semantics, null/missing meaning, source-vs-derived status, and provenance requirements where applicable.
+
+Processor and mapper boundaries must declare compatible input/output `SchemaRef`s. Semantic changes require an explicit schema and/or mapper version; historical records are not silently reinterpreted.
+
+Preferred boundary chain:
+`SourceEnvelope -> source-native normalized schema -> deterministic canonical schema -> derived/annotation schema -> projection/API schema`.
+
+## INV-PIPE-001 — DataSources publish into typed pipelines
+A configured DataSource instance may publish into one or more pipelines only through declared schema-compatible bindings.
+
+Pipelines may be:
+- deterministic fact pipelines;
+- deterministic derived pipelines;
+- explicitly probabilistic/model-based derived pipelines.
+
+The DataSource/plugin owns acquisition and source-native normalization, not canonical resolution or downstream interpretation. Model-based processing cannot directly overwrite canonical facts.
+
+## INV-UML-001 — Architecture diagrams are maintained as code
+When architecture relationships, lifecycle, data lineage, state transitions, or cross-component flow are materially clarified by diagrams, maintain UML-style diagram-as-code alongside the normative documentation.
+
+Mermaid is the preferred Markdown format for GitHub documentation because it is diffable, reviewable, version-controlled, and directly renderable.
+
+At minimum, the DataSource/Pipeline architecture maintains:
+- class/domain diagram;
+- component/dependency diagram;
+- ingestion sequence diagram;
+- plugin lifecycle/state diagram;
+- provenance/data-lineage diagram.
+
+Diagrams do not replace normative prose, schemas, acceptance criteria, or tests. If a diagram and written invariant disagree, the inconsistency must be corrected before implementation. Architecture-changing work updates affected diagrams first under `INV-DOC-001`.
