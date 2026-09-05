@@ -1,21 +1,19 @@
-# Shawn Life OS — Documentation & Agent Handoff
+# Shawn Life OS — Documentation Repository
 
-This repository is the canonical home for Shawn Life OS documentation, architecture decisions, validation reports, source manifests, and agent handoff/progress.
+This repository stores versioned, relatively stable Shawn Life OS documentation: specifications, architecture decisions, validation reports, release notes, research summaries, and source manifests.
 
 ## Repository split
 
-- `lazerta/shawn-life-os` — application source code, tests, migrations, build/CI, release tags.
-- `lazerta/shawn-life-os-docs` — specs, architecture, handoff, validation reports, research, and operational continuation state.
-- Google Drive — large binary artifacts, dependency bundles, ZIPs/JARs, and archival copies that do not belong in Git.
+- `lazerta/shawn-life-os` — canonical application source code, tests, migrations, build/CI, and release tags.
+- `lazerta/shawn-life-os-docs` — stable/versioned specs, architecture decisions, validation reports, research, and documentation snapshots.
+- Google Drive `Shawn Life OS - Agent Workspace/lib/AGENT_HANDOFF_PROGRESS_AND_WORKAROUNDS` — canonical **live handoff / progress / workaround process document**.
+- Google Drive workspace — large binary artifacts, dependency bundles, ZIPs/JARs, and operational working files that do not belong in Git.
 
-## Start here
+## Source-of-truth rules
 
-1. Read [`handoff/AGENT_HANDOFF_PROGRESS_AND_WORKAROUNDS.md`](handoff/AGENT_HANDOFF_PROGRESS_AND_WORKAROUNDS.md).
-2. Check the latest validation report under `validation/`.
-3. Use the code repository as the source-of-truth for implementation state.
+1. **Code state:** `lazerta/shawn-life-os`.
+2. **Live agent handoff / progress / current workaround state:** Google Drive handoff document.
+3. **Stable documentation and validation snapshots:** this repository.
+4. **Large release/validation binaries:** Google Drive.
 
-## Handoff rule
-
-Any meaningful change to architecture, validation maturity, known blockers, workarounds, accepted fixes, baseline commit/tag, or next-agent action must update the handoff in this repository.
-
-Git history is the authoritative change log for handoff/documentation from this point forward. Google Drive remains an archive/large-artifact workspace, not the sole canonical handoff store.
+The frequently changing handoff is intentionally not mirrored on every small update into Git. When a milestone stabilizes, a report/spec snapshot may be committed here for durable version history.
