@@ -4,9 +4,10 @@ This repository stores versioned, relatively stable Shawn Life OS documentation:
 
 ## Start here
 
-- `ENGINEERING_PRINCIPLES.md` — long-term project constitution: Document First, Open Source First, Adapter/Port First, Code First / Model Last, Spec/Test/Real-Data Driven, Pluggable DataSources, Evidence Before PASS.
+- `ENGINEERING_PRINCIPLES.md` — long-term project constitution: Document First, Open Source First, Adapter/Port First, Code First / Model Last, Spec/Test/Real-Data Driven, Pluggable DataSources, Shared Capability Infrastructure, Evidence Before PASS.
 - `ARCHITECTURE_INVARIANTS.md` — durable architecture invariants, including deterministic facts, immutable + append-only history, provenance, rebuildable projections, versioned semantic schemas, plugin lifecycle, and code pre-commit regression rules.
 - `DATASOURCE_PLUGIN_ARCHITECTURE.md` — normative DataSource/plugin/pipeline architecture with Mermaid UML diagrams for domain relationships, dependency flow, ingestion sequence, plugin lifecycle, data lineage, and pipeline fan-out.
+- `SHARED_CAPABILITY_INFRASTRUCTURE.md` — reusable provider infrastructure for OCR and other cross-DataSource capabilities, including capability ports, provider registry/configuration, provenance, extracted-evidence contracts, and UML.
 
 ## Repository split
 
