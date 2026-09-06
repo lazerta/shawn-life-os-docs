@@ -94,3 +94,19 @@ Every durable or pipeline-visible output declares a versioned semantic schema. A
 Architecture relationships, lifecycle, data flow, and state transitions should be documented with maintainable UML-style diagram-as-code when a diagram materially improves precision. Mermaid is the preferred Markdown format because it is diffable, reviewable, version-controlled, and rendered directly by GitHub.
 
 Diagrams do not replace normative prose, schemas, acceptance criteria, or tests. When architecture relationships change, affected diagrams are updated before implementation under the Document First rule.
+
+## 16. Shared Capability Infrastructure
+Commodity capabilities that are useful across multiple DataSources or pipelines belong in shared infrastructure behind stable Life OS capability ports and configurable provider adapters. They must not be duplicated or owned by a single source plugin merely because that plugin is the first consumer.
+
+Preferred dependency direction:
+`DataSource / Pipeline -> Capability Port -> Provider Registry -> Provider Adapter -> open-source/external implementation`
+
+Examples include OCR, speech-to-text, document parsing, media metadata extraction, image preprocessing, embeddings, and model inference.
+
+OCR is the first concrete application of this rule. A WeChat screenshot adapter consumes `OcrPort`; it does not own PaddleOCR, RapidOCR, EasyOCR, or another engine. Other image/document sources reuse the same OCR infrastructure.
+
+Provider selection is declarative and provenance-aware. Every durable provider result records the actual provider/adapter/model/runtime version and the source evidence it processed.
+
+Probabilistic capability output such as OCR recognition is extracted/derived evidence by default, not canonical fact. Promotion into a source-native record or canonical fact must obey the relevant schema, deterministic mapping, validation, provenance, and uncertainty rules.
+
+See `SHARED_CAPABILITY_INFRASTRUCTURE.md` for the normative provider/capability architecture.
