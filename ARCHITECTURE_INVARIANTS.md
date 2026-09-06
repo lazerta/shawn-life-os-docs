@@ -130,3 +130,27 @@ At minimum, the DataSource/Pipeline architecture maintains:
 - provenance/data-lineage diagram.
 
 Diagrams do not replace normative prose, schemas, acceptance criteria, or tests. If a diagram and written invariant disagree, the inconsistency must be corrected before implementation. Architecture-changing work updates affected diagrams first under `INV-DOC-001`.
+
+## INV-CAP-001 — Cross-source commodity capabilities are shared infrastructure
+A commodity capability that is useful across more than one DataSource or pipeline must be exposed through a stable Life OS capability port and configurable provider registry rather than duplicated inside source plugins.
+
+Preferred dependency direction:
+`DataSource / Pipeline -> Capability Port -> Provider Registry -> Provider Adapter -> open-source/external implementation`.
+
+Examples include OCR, speech-to-text, document parsing, media metadata extraction, image preprocessing, embeddings, and model inference.
+
+Provider selection must be declarative, capability-compatible, privacy-aware, health-checked, and provenance-preserving. Silent provider substitution is prohibited when it could change semantics, privacy/egress behavior, or reproducibility unless an explicit versioned fallback policy authorizes it.
+
+## INV-OCR-001 — OCR is shared extracted-evidence infrastructure
+OCR is not owned by the WeChat plugin or any other single DataSource. Image-based adapters consume a shared `OcrPort` backed by configurable provider adapters such as PaddleOCR, RapidOCR, EasyOCR, platform OCR, or future providers.
+
+Every durable OCR result must use a versioned semantic schema and retain at minimum the source evidence reference, provider/project identity, provider adapter version, model/runtime version when applicable, relevant configuration/version or config hash, recognized regions/text, coordinates where available, provider confidence where supplied, warnings/partial status, processing run identity/timestamp, and deterministic preprocessing provenance.
+
+OCR output is extracted/derived evidence, not automatically canonical fact. Provider confidence is evidence metadata, not a truth score. A downstream deterministic source parser may transform OCR output into a versioned source-native representation while preserving uncertainty and provenance.
+
+If a factual promotion depends on uncertain OCR interpretation, promotion must follow the documented schema, deterministic validation/corroboration, or explicit human-review policy. OCR/model/vision output must never directly overwrite canonical facts.
+
+The preferred first WeChat screenshot flow is:
+`WeChat DataSource -> Screenshot Acquisition Adapter -> OcrPort -> configured shared OCR provider -> versioned OCR extracted evidence -> WhoChat/source parser -> wechat.normalized-chat@version -> typed pipeline -> SourceRevision -> deterministic canonical mapping`.
+
+The normative shared-provider design is maintained in `SHARED_CAPABILITY_INFRASTRUCTURE.md`.
